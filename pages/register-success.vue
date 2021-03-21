@@ -2,24 +2,21 @@
   <div class="container mx-auto h-screen flex justify-center items-center">
     <div class="w-full lg:w-1/3 px-10 lg:px-0">
       <div class="flex justify-center items-center mx-auto mt-6 mb-8">
-        <img src="/404-illustration.svg" alt="" class="w-full" />
+        <img src="/success-illustration.svg" alt="" class="w-full" />
       </div>
-      <h2 class="font-medium mb-3 text-3xl text-center">
-        Opps! Something wrong
-      </h2>
-      <p v-if="error.statusCode === 404" class="text-center font-light">
-        The page thate you request doesn't
+      <h2 class="font-medium mb-3 text-3xl text-center">Welcome onboard!</h2>
+      <p class="text-center font-light">
+        Your account just registered
         <br />
-        exist at this moment
+        into our system
       </p>
-      <p v-else class="text-center font-light">An error occured</p>
       <div class="mb-4 mt-6">
         <div class="mb-3">
           <button
             class="block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
             @click="$router.push({ path: '/' })"
           >
-            Back To Homepage
+            Start Explore
           </button>
         </div>
       </div>
@@ -29,7 +26,6 @@
 
 <script>
 export default {
-  layout: 'empty',
-  props: ['error'], // you can set a custom layout for the error page
+  layout: 'success',
 }
 </script>

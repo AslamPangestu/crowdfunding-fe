@@ -1,5 +1,5 @@
 <template>
-  <header class="flex items-center">
+  <header class="flex header-container">
     <div style="height: 54px" class="pr-5">
       <img src="/logo.svg" alt="logo" class="h-full" />
     </div>

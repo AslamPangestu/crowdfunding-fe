@@ -14,7 +14,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/svg', href: '/logo.svg' },
       {
         rel: 'stylesheet',
         href:
@@ -38,50 +38,15 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    // https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    // https://auth.nuxtjs.org/guide/setup
-    '@nuxtjs/auth-next',
   ],
-  auth: {
-    strategies: {
-      local: {
-        token: {
-          property: 'token',
-          // required: true,
-          // type: 'Bearer'
-        },
-        user: {
-          property: 'user',
-          // autoFetch: true
-        },
-        endpoints: {
-          login: {
-            url: '/api/v1/login',
-            method: 'post',
-            propertyName: 'data.token',
-          },
-          logout: false,
-          user: {
-            url: '/api/v1/profile',
-            method: 'get',
-            propertyName: 'data',
-          },
-        },
-      },
-    },
-  },
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseURL: 'http://localhost:8080', // Used as fallback if no runtime config is provided
-  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -92,4 +57,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  // https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-env/
+  env: {
+    baseURL: `${process.env.BASE_URL}/api/v1` || 'http://localhost:8000',
+    baseURLStatic: `${process.env.BASE_URL}` || 'http://localhost:8000',
+  },
 }

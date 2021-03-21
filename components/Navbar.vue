@@ -33,23 +33,95 @@
         </nuxt-link>
       </li>
     </ul>
-    <ul class="flex ml-auto items-center mt-2">
-      <li>
-        <nuxt-link
-          to="/register"
-          class="inline-block bg-transparent border-white border hover:bg-white hover:bg-opacity-25 text-white font-light w-40 text-center px-6 py-1 text-lg rounded-full mr-4"
-        >
-          Sign Up
-        </nuxt-link>
-      </li>
-      <li>
-        <nuxt-link
-          to="/login"
-          class="inline-block bg-transparent border-white border hover:bg-white hover:bg-opacity-25 text-white font-light w-40 text-center px-6 py-1 text-lg rounded-full"
-        >
-          My Account
-        </nuxt-link>
-      </li>
-    </ul>
+    <template v-if="!$store.state.auth.loggedIn">
+      <ul class="flex ml-auto items-center mt-2">
+        <li>
+          <nuxt-link
+            to="/register"
+            class="inline-block bg-transparent border-white border hover:bg-white hover:bg-opacity-25 text-white font-light w-40 text-center px-6 py-1 text-lg rounded-full mr-4"
+          >
+            Sign Up
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link
+            to="/login"
+            class="inline-block bg-transparent border-white border hover:bg-white hover:bg-opacity-25 text-white font-light w-40 text-center px-6 py-1 text-lg rounded-full"
+          >
+            Login
+          </nuxt-link>
+        </li>
+      </ul>
+    </template>
+    <template v-else>
+      <div class="flex ml-auto">
+        <div class="dropdown inline-block relative z-10">
+          <button
+            class="bg-white text-gray-700 font-semibold py-2 px-6 w-52 rounded inline-flex items-center justify-between"
+          >
+            <img
+              v-if="$store.getters['auth/HasImage']"
+              :src="$store.getters['auth/Avatar']"
+              class="h-8 w-8 rounded-full"
+            />
+            <div class="flex items-center">
+              <span class="mr-1">
+                {{ $store.state.auth.user.username }}
+              </span>
+              <svg
+                class="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                />
+              </svg>
+            </div>
+          </button>
+          <ul
+            class="dropdown-menu absolute hidden text-gray-700 pt-1 shadow w-full -mt-2"
+          >
+            <nuxt-link to="/dashboard">
+              <li
+                class="cursor-pointer bg-white hover:bg-gray-100 hover:text-orange-button border-t py-2 px-4 block whitespace-no-wrap"
+              >
+                Dashboard
+              </li>
+            </nuxt-link>
+            <nuxt-link to="/dashboard">
+              <li
+                class="cursor-pointer bg-white hover:bg-gray-100 border-t hover:text-orange-button py-2 px-4 block whitespace-no-wrap"
+              >
+                Account Settings
+              </li>
+            </nuxt-link>
+            <li
+              class="cursor-pointer rounded-b bg-white hover:bg-gray-100 border-t hover:text-orange-button py-2 px-4 block whitespace-no-wrap"
+              @click="logout"
+            >
+              Logout
+            </li>
+          </ul>
+        </div>
+      </div>
+    </template>
   </header>
 </template>
+
+<script>
+export default {
+  name: 'NavbarComponent',
+  methods: {
+    async logout() {
+      await this.$store.dispatch('auth/Logout')
+    },
+  },
+}
+</script>
+
+<style scoped>
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+</style>

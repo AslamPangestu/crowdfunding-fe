@@ -8,7 +8,7 @@
           best idea and innovation
         </h1>
         <button
-          class="inline-block bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 mt-8 text-lg rounded-full"
+          class="inline-block bg-orange-action hover:bg-green-action text-white font-semibold px-6 py-2 mt-8 text-md rounded-full w-56"
           @click="$router.push({ path: '/register' })"
         >
           Getting Start

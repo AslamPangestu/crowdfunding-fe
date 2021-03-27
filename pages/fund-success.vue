@@ -16,7 +16,7 @@
         <div class="mb-4 mt-6">
           <div class="mb-3">
             <button
-              class="block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
+              class="block w-full bg-orange-action hover:bg-green-action text-white font-semibold px-6 py-4 text-lg rounded-full"
               @click="$router.push({ path: '/' })"
             >
               Fund Other Project
@@ -24,7 +24,7 @@
           </div>
           <div class="mb-4">
             <button
-              class="block w-full bg-transparent border border-gray-500 text-gray-500 hover:bg-green-button hover:border-green-button hover:text-white font-light px-6 py-4 text-lg rounded-full"
+              class="block w-full bg-transparent border border-gray-500 text-gray-500 hover:bg-green-action hover:border-green-action hover:text-white font-light px-6 py-4 text-lg rounded-full"
               @click="$router.push({ path: '/dashboard' })"
             >
               My Dashboard

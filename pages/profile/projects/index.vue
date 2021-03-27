@@ -22,7 +22,7 @@
         <div class="w-1/4 text-right">
           <nuxt-link
             to="/profile/projects/create"
-            class="bg-orange-button hover:bg-green-button text-white font-bold py-4 px-4 rounded inline-flex items-center"
+            class="bg-orange-action hover:bg-green-action text-white font-bold py-4 px-4 rounded inline-flex items-center"
           >
             + Create Campaign
           </nuxt-link>
@@ -57,7 +57,7 @@
             <div class="flex items-center">
               <nuxt-link
                 :to="`/profile/projects/${i}`"
-                class="bg-green-button text-white py-2 px-4 rounded"
+                class="bg-green-action text-white py-2 px-4 rounded"
               >
                 Detail
               </nuxt-link>

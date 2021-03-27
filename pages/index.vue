@@ -15,7 +15,7 @@
               a real product and be the contributor
             </p>
             <button
-              class="block bg-orange-button hover:bg-green-button text-white font-semibold px-12 py-3 text-xl rounded-full"
+              class="block bg-orange-action hover:bg-green-action text-white font-semibold px-12 py-3 text-xl rounded-full"
               @click="$router.push({ path: '/projects' })"
             >
               Find a Project
@@ -89,7 +89,7 @@
         </div>
         <div class="w-auto mt-5">
           <nuxt-link
-            class="text-gray-900 hover:underline text-md font-medium"
+            class="text-gray-900 hover:underline hover:text-orange-action text-md font-medium"
             to="/projects"
           >
             View All
@@ -100,56 +100,16 @@
         <div
           v-for="campaign in campaigns"
           :key="campaign.id"
-          class="card-project w-full p-5 border border-gray-500 rounded-20"
+          class="card-project w-full border border-gray-500 rounded-20"
         >
-          <div class="item">
-            <figure class="item-image">
-              <img
-                :src="`${$store.state.baseURL}/${campaign.image_url}`"
-                alt=""
-                class="rounded-20 w-full max-h-64 object-cover"
-              />
-            </figure>
-            <div class="item-meta">
-              <h4 class="text-3xl font-medium text-gray-900 mt-5">
-                {{ campaign.title }}
-              </h4>
-              <p class="text-md font-light text-gray-900">
-                {{ campaign.short_description }}
-              </p>
-              <div class="relative pt-4 progress-bar">
-                <div
-                  class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200 h-3 rounded-lg"
-                >
-                  <div
-                    :style="`width: ${
-                      (campaign.current_amount / campaign.target_amount) * 100
-                    }%`"
-                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-progress progress-striped"
-                  ></div>
-                </div>
-              </div>
-              <div class="flex progress-info">
-                <div>{{ campaign.current_amount }}%</div>
-                <div class="ml-auto font-semibold">
-                  Rp
-                  {{ new Intl.NumberFormat().format(campaign.target_amount) }}
-                </div>
-              </div>
-            </div>
-            <button
-              to="/projects/1"
-              class="text-center mt-5 button-cta block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-2 text-lg rounded-full"
-              @click="
-                $router.push({
-                  name: 'projects-id',
-                  params: { id: campaign.id },
-                })
-              "
-            >
-              Fund Now
-            </button>
-          </div>
+          <project
+            :id="campaign.id"
+            :image-u-r-l="campaign.image_url"
+            :title="campaign.title"
+            :short-desc="campaign.short_description"
+            :current-amount="campaign.current_amount"
+            :target-amount="campaign.target_amount"
+          />
         </div>
       </div>
     </section>
@@ -206,6 +166,9 @@
 <script>
 export default {
   name: 'HomePage',
+  components: {
+    Project: () => import('~/components/Card/Project'),
+  },
   layout: 'main',
   async asyncData({ store }) {
     const campaigns = await store.dispatch('campaign/GetCampaigns')

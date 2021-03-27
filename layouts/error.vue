@@ -16,7 +16,7 @@
       <div class="mb-4 mt-6">
         <div class="mb-3">
           <button
-            class="block w-full bg-orange-button hover:bg-green-button text-white font-semibold px-6 py-4 text-lg rounded-full"
+            class="block w-full bg-orange-action hover:bg-green-action text-white font-semibold px-6 py-4 text-lg rounded-full"
             @click="$router.push({ path: '/' })"
           >
             Back To Homepage

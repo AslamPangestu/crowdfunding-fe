@@ -63,7 +63,7 @@
               <img
                 v-if="$store.getters['auth/HasImage']"
                 :src="$store.getters['auth/Avatar']"
-                class="h-8 w-8 rounded-full"
+                class="h-8 w-8 rounded-full object-cover"
               />
               <span class="ml-2">
                 {{ $store.state.auth.user.username }}

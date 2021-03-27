@@ -104,7 +104,7 @@
         >
           <project
             :id="campaign.id"
-            :image-u-r-l="campaign.image_url"
+            :image-url="campaign.image_url"
             :title="campaign.title"
             :short-desc="campaign.short_description"
             :current-amount="campaign.current_amount"
@@ -113,7 +113,7 @@
         </div>
       </div>
     </section>
-    <section class="container mx-auto pt-24">
+    <section class="container mx-auto py-24">
       <div class="flex justify-between items-center">
         <div class="w-auto">
           <h2 class="text-3xl text-gray-900 mb-8">
@@ -158,8 +158,10 @@
         <div class="w-2/12"></div>
       </div>
     </section>
-    <div class="cta-clip"></div>
-    <CallToAction />
+    <template v-if="!$store.state.auth.loggedIn">
+      <div class="cta-clip"></div>
+      <CallToAction />
+    </template>
   </div>
 </template>
 

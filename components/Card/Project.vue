@@ -2,7 +2,7 @@
   <div class="bg-white p-5">
     <figure class="item-image">
       <img
-        :src="`${$store.state.baseURL}/${imageURL}`"
+        :src="image"
         alt=""
         class="rounded-20 w-full max-h-64 object-cover"
       />
@@ -19,16 +19,15 @@
           class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200 h-3 rounded-lg"
         >
           <div
-            :style="`width: ${(currentAmount / targetAmount) * 100}%`"
+            :style="`width: ${percentage}%`"
             class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-progress progress-striped"
           ></div>
         </div>
       </div>
       <div class="flex progress-info">
-        <div>{{ currentAmount }}%</div>
+        <div>{{ percentage }}%</div>
         <div class="ml-auto font-semibold">
-          Rp
-          {{ new Intl.NumberFormat().format(targetAmount) }}
+          Rp {{ new Intl.NumberFormat().format(targetAmount) }}
         </div>
       </div>
     </div>
@@ -53,11 +52,19 @@ export default {
   name: 'ProjectItemComponent',
   props: {
     id: { type: Number, default: 0 },
-    imageURL: { type: String, default: '' },
+    imageUrl: { type: String, default: '' },
     title: { type: String, default: '' },
     shortDesc: { type: String, default: '' },
     currentAmount: { type: Number, default: 0 },
     targetAmount: { type: Number, default: 0 },
+  },
+  computed: {
+    percentage() {
+      return (this.currentAmount / this.targetAmount) * 100
+    },
+    image() {
+      return `${this.$store.state.baseURL}/${this.imageUrl}`
+    },
   },
 }
 </script>

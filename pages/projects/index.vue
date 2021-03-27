@@ -12,7 +12,7 @@
         >
           <project
             :id="campaign.id"
-            :image-u-r-l="campaign.image_url"
+            :image-url="campaign.image_url"
             :title="campaign.title"
             :short-desc="campaign.short_description"
             :current-amount="campaign.current_amount"
@@ -21,6 +21,10 @@
         </div>
       </div>
     </section>
+    <template v-if="!$store.state.auth.loggedIn">
+      <div class="cta-clip"></div>
+      <CallToAction />
+    </template>
   </div>
 </template>
 

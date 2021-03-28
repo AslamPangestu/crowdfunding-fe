@@ -3,6 +3,7 @@ import VuexPersistence from 'vuex-persist'
 
 import auth from './auth'
 import campaign from './campaign'
+import transaction from './transaction'
 
 // Persist State Config
 const vuexLocal = new VuexPersistence({
@@ -16,11 +17,20 @@ export default function (/* { ssrContext } */) {
     state: {
       baseURL: process.env.baseURLStatic,
     },
+    getters: {
+      Header(state) {
+        return {
+          Authorization: `Bearer ${state.auth.user.token}`,
+        }
+      },
+    },
+    // Modules
     modules: {
       auth,
       campaign,
+      transaction,
     },
-
+    // Plugins
     plugins: [vuexLocal.plugin],
   })
 }

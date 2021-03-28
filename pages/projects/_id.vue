@@ -59,18 +59,30 @@
             <ul class="list-check mt-3">
               <li v-for="(perk, id) in campaign.perks" :key="id">{{ perk }}</li>
             </ul>
-            <input
-              type="number"
-              class="border border-gray-500 block w-full px-6 py-2 mt-4 rounded-full text-gray-800 transition duration-300 ease-in-out focus:outline-none focus:shadow-outline"
-              placeholder="Amount in Rp"
-              value=""
-            />
-            <nuxt-link
-              to="/fund-success"
-              class="text-center mt-3 button-cta block w-full bg-orange-action hover:bg-green-action text-white font-medium px-6 py-2 text-md rounded-full"
-            >
-              Fund Now
-            </nuxt-link>
+            <template v-if="!isLoggedIn">
+              <nuxt-link
+                class="text-center mt-3 button-cta block w-full bg-orange-action hover:bg-green-action text-white font-medium px-6 py-2 text-md rounded-full"
+                to="/login"
+              >
+                Sign In To Fund
+              </nuxt-link>
+            </template>
+            <template v-else>
+              <form method="post" @submit.prevent="fund">
+                <input
+                  v-model.number="amount"
+                  type="number"
+                  class="border border-gray-500 block w-full px-6 py-2 mt-4 rounded-full text-gray-800 transition duration-300 ease-in-out focus:outline-none focus:shadow-outline"
+                  placeholder="Amount in Rp"
+                />
+                <button
+                  class="text-center mt-3 button-cta block w-full bg-orange-action hover:bg-green-action text-white font-medium px-6 py-2 text-md rounded-full"
+                  type="submit"
+                >
+                  Fund Now
+                </button>
+              </form>
+            </template>
           </div>
         </div>
       </div>
@@ -109,7 +121,7 @@
         <div class="w-1/4 hidden md:block"></div>
       </div>
     </section>
-    <template v-if="!$store.state.auth.loggedIn">
+    <template v-if="!isLoggedIn">
       <div class="cta-clip"></div>
       <CallToAction />
     </template>
@@ -127,6 +139,7 @@ export default {
   data() {
     return {
       defaultImage: '',
+      amount: 0,
     }
   },
   computed: {
@@ -135,6 +148,12 @@ export default {
     },
     avatarImage() {
       return `${this.$store.state.baseURL}/${this.campaign.user.image_url}`
+    },
+    campaignID() {
+      return Number.parseInt(this.$route.params.id)
+    },
+    isLoggedIn() {
+      return this.$store.state.auth.loggedIn
     },
   },
   mounted() {
@@ -148,6 +167,14 @@ export default {
     },
     generateImage(path) {
       return `${this.$store.state.baseURL}/${path}`
+    },
+    async fund() {
+      const payload = {
+        campaign_id: this.campaignID,
+        amount: this.amount,
+      }
+      const res = await this.$store.dispatch('transaction/Fund', payload)
+      window.location = res.payment_url
     },
   },
 }

@@ -33,4 +33,17 @@ export default {
       console.error('Err UploadAvatar', error)
     }
   },
+  Profile: async (header) => {
+    try {
+      const res = await Init(process.env.baseURL).get('/profile', null, {
+        headers: {
+          ...header,
+        },
+      })
+      console.debug('UploadAvatar', res)
+      return res.data.data
+    } catch (error) {
+      console.error('Err UploadAvatar', error)
+    }
+  },
 }

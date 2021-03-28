@@ -1,4 +1,5 @@
 export const HasImage = (state) => state.user.image_url !== ''
+
 export const Avatar = (state, _getters, rootState) => {
   if (!state.user || !state.user.image_url) {
     return './avatar.jpg'

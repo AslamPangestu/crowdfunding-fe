@@ -30,7 +30,7 @@
         Hi, {{ $store.state.auth.user.username }}
       </h2>
       <p class="text-white text-center font-light">Please upload your selfie</p>
-      <div class="flex justify-center items-center mb-4 mt-6">
+      <div class="flex justify-center items-center my-4">
         <button
           :disabled="!selectedFile"
           :class="!selectedFile ? 'opacity-50 cursor-not-allowed' : ''"
@@ -40,7 +40,7 @@
           Sign Up Now
         </button>
       </div>
-      <div class="flex justify-center items-center mb-4">
+      <div class="flex justify-center items-center">
         <button
           class="block w-64 bg-transparent border-white border hover:bg-white hover:bg-opacity-25 text-white font-light px-6 py-2 text-md rounded-full"
           @click="$router.push({ path: '/register-success' })"

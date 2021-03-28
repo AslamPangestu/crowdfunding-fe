@@ -10,7 +10,7 @@
         <br />
         into our system
       </p>
-      <div class="flex justify-center items-center mb-4 mt-6">
+      <div class="flex justify-center items-center my-4">
         <button
           class="block w-64 bg-orange-action hover:bg-green-action text-white font-semibold px-6 py-2 text-md rounded-full"
           @click="$router.push({ path: '/' })"

@@ -7,6 +7,11 @@ export const GetCampaigns = async () => {
   return data
 }
 
+export const GetCampaignsUser = async () => {
+  const data = await Service.GetCampaigns()
+  return data
+}
+
 export const GetCampaign = async (_, id) => {
   const data = await Service.GetCampaign(id)
   return data

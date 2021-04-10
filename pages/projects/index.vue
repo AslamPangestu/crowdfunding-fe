@@ -4,7 +4,10 @@
       <h1 class="text-4xl text-white mb-5">Projects</h1>
     </section>
     <section class="container project-container mx-auto -mt-16">
-      <div class="grid grid-cols-3 gap-4 pb-8">
+      <div
+        v-if="campaigns && campaigns.length !== 0"
+        class="grid grid-cols-3 gap-4 pb-8"
+      >
         <div
           v-for="campaign in campaigns"
           :key="campaign.id"
@@ -18,6 +21,15 @@
             :current-amount="campaign.current_amount"
             :target-amount="campaign.target_amount"
           />
+        </div>
+      </div>
+      <div v-else>
+        <div
+          class="card-project w-full border border-gray-500 rounded-20 flex justify-center items-center"
+        >
+          <h2 class="text-3xl text-gray-900 py-16">
+            Daftar Campaign Tidak Tersedia
+          </h2>
         </div>
       </div>
     </section>

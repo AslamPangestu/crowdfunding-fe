@@ -1,42 +1,29 @@
 <template>
-  <div class="success-page">
-    <div class="container mx-auto h-screen flex justify-center items-center">
-      <div class="w-full lg:w-1/3 px-10 lg:px-0">
-        <div class="flex justify-center items-center mx-auto mt-6 mb-8">
-          <img src="/funded-illustration.svg" alt="" class="w-64 h-64" />
-        </div>
-        <h2 class="font-medium mb-3 text-3xl text-center">
-          Yeay! You are super
-        </h2>
-        <p class="text-center font-light">
-          Your money has ben transferred
-          <br />
-          into company's account
-        </p>
-        <div class="flex justify-center items-center my-4">
-          <button
-            class="block w-64 bg-orange-action hover:bg-green-action text-white font-semibold px-6 py-2 text-md rounded-full"
-            @click="$router.push({ path: '/' })"
-          >
-            Fund Other Project
-          </button>
-        </div>
-        <div class="flex justify-center items-center">
-          <button
-            class="block w-64 bg-transparent border border-gray-500 text-gray-500 hover:bg-green-action hover:border-green-action hover:text-white font-light px-6 py-2 text-md rounded-full"
-            @click="$router.push({ path: '/dashboard' })"
-          >
-            My Dashboard
-          </button>
-        </div>
-      </div>
-    </div>
+  <div>
+    <status-action
+      title="Yeay! You are super"
+      image="/funded-illustration.svg"
+      multiple-action
+      :first-action="{ label: 'Fund Other Project', route: '/projects' }"
+      :second-action="{
+        label: 'My Dashboard',
+        route: '/profile/dashboard/projects',
+      }"
+    >
+      <template #content>
+        Your money has ben transferred
+        <br />
+        into company's account</template
+      >
+    </status-action>
   </div>
 </template>
 
 <script>
 export default {
   name: 'SuccessTransactionPage',
-  layout: 'success',
+  components: {
+    StatusAction: () => import('~/components/StatusAction'),
+  },
 }
 </script>

@@ -14,21 +14,10 @@
       <p class="text-md font-light text-gray-900">
         {{ shortDesc }}
       </p>
-      <div class="relative pt-4 progress-bar">
-        <div
-          class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200 h-3 rounded-lg"
-        >
-          <div
-            :style="`width: ${percentage}%`"
-            class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-progress progress-striped"
-          ></div>
-        </div>
-      </div>
+      <progress-bar class="pt-4" :value="percentage" />
       <div class="flex progress-info">
         <div>{{ percentage }}%</div>
-        <div class="ml-auto font-semibold">
-          Rp {{ new Intl.NumberFormat().format(targetAmount) }}
-        </div>
+        <div class="ml-auto font-semibold">{{ amount }}</div>
       </div>
     </div>
     <button
@@ -47,9 +36,13 @@
 </template>
 
 <script>
+import { AmountIDR } from '~/utils/formatter'
 /* eslint-disable vue/prop-name-casing */
 export default {
   name: 'ProjectItemComponent',
+  components: {
+    ProgressBar: () => import('~/components/ProgressBar'),
+  },
   props: {
     id: { type: Number, default: 0 },
     imageUrl: { type: String, default: '' },
@@ -64,6 +57,9 @@ export default {
     },
     image() {
       return `${this.$store.state.baseURL}/${this.imageUrl}`
+    },
+    amount() {
+      return AmountIDR(this.targetAmount)
     },
   },
 }

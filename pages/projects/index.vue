@@ -33,9 +33,8 @@
         </div>
       </div>
     </section>
-    <template v-if="!$store.state.auth.loggedIn">
-      <div class="cta-clip"></div>
-      <CallToAction />
+    <template v-if="!isLoggedIn">
+      <call-to-action />
     </template>
   </div>
 </template>
@@ -45,11 +44,17 @@ export default {
   name: 'ProjectsPage',
   components: {
     Project: () => import('~/components/Card/Project'),
+    CallToAction: () => import('~/components/CallToAction'),
   },
   layout: 'main',
   async asyncData({ store }) {
     const campaigns = await store.dispatch('campaign/GetCampaigns')
     return { campaigns }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.auth.loggedIn
+    },
   },
 }
 </script>

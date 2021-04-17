@@ -170,9 +170,8 @@
         <div class="w-2/12"></div>
       </div>
     </section>
-    <template v-if="!$store.state.auth.loggedIn">
-      <div class="cta-clip"></div>
-      <CallToAction />
+    <template v-if="!isLoggedIn">
+      <call-to-action />
     </template>
   </div>
 </template>
@@ -182,11 +181,19 @@ export default {
   name: 'HomePage',
   components: {
     Project: () => import('~/components/Card/Project'),
+    CallToAction: () => import('~/components/CallToAction'),
   },
   layout: 'main',
   async asyncData({ store }) {
-    const campaigns = await store.dispatch('campaign/GetCampaigns')
+    const campaigns = await store.dispatch('campaign/GetCampaigns', {
+      pageSize: 6,
+    })
     return { campaigns }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.auth.loggedIn
+    },
   },
 }
 </script>

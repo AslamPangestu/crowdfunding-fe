@@ -97,20 +97,11 @@
             {{ campaign.short_description }}
           </p>
 
-          <div class="relative progress-bar">
-            <div
-              class="overflow-hidden mb-4 text-xs flex rounded-full bg-gray-200 h-6"
-            >
-              <div
-                :style="`width: ${percentage}%`"
-                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-progress progress-striped"
-              ></div>
-            </div>
-          </div>
+          <progress-bar :value="percentage" />
           <div class="flex progress-info mb-6">
             <div class="text-2xl">{{ percentage }}%</div>
             <div class="ml-auto font-semibold text-2xl">
-              Rp {{ new Intl.NumberFormat().format(campaign.target_amount) }}
+              {{ currentAmount }}
             </div>
           </div>
 
@@ -122,15 +113,19 @@
       </div>
     </section>
     <template v-if="!isLoggedIn">
-      <div class="cta-clip"></div>
-      <CallToAction />
+      <call-to-action />
     </template>
   </div>
 </template>
 
 <script>
+import { AmountIDR } from '~/utils/formatter'
 export default {
   name: 'DetailProjectPage',
+  components: {
+    ProgressBar: () => import('~/components/ProgressBar'),
+    CallToAction: () => import('~/components/CallToAction'),
+  },
   layout: 'main',
   async asyncData({ store, params }) {
     const campaign = await store.dispatch('campaign/GetCampaign', params.id)
@@ -154,6 +149,9 @@ export default {
     },
     isLoggedIn() {
       return this.$store.state.auth.loggedIn
+    },
+    currentAmount() {
+      return AmountIDR(this.campaign.target_amount)
     },
   },
   mounted() {

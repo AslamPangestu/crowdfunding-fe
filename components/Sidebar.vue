@@ -1,5 +1,6 @@
 <template>
   <section class="menu-section w-1/5">
+    <!-- TODO: Create Accordion -->
     <ul class="text-gray-700 shadow">
       <nuxt-link to="/dashboard">
         <li

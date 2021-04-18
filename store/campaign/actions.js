@@ -1,21 +1,33 @@
-import Service from '~/services/campaign'
-
-// ctx -> {state,rootGetters,rootState,getters,dispatch,commit}
-// payload -> data send from called action
-export const GetCampaigns = async (
+export async function GetCampaigns(
   _,
   { page, pageSize } = { page: 1, pageSize: 0 }
-) => {
-  const data = await Service.GetCampaigns({ page, pageSize })
-  return data
+) {
+  const res = await this.$axios.$get('/v1/campaigns', {
+    params: { page, page_size: pageSize },
+  })
+  return res
 }
 
-export const GetCampaignsUser = async () => {
-  const data = await Service.GetCampaigns()
-  return data
+export async function GetCampaignsUser(
+  { rootGetters },
+  { page, pageSize } = { page: 1, pageSize: 0 }
+) {
+  const res = await this.$axios.$get('/v1/campaigns', {
+    params: { user_id: rootGetters['auth/UserID'], page, page_size: pageSize },
+  })
+  return res
 }
 
-export const GetCampaign = async (_, id) => {
-  const data = await Service.GetCampaign(id)
-  return data
+export async function GetCampaign(_, id) {
+  const res = await this.$axios.$get(`/v1/campaigns/${id}`)
+  return res
+}
+
+export async function PostNewCampaign({ rootGetters }, payload) {
+  const res = await this.$axios.$post('/v1/campaigns/', payload, {
+    headers: {
+      ...rootGetters.Header,
+    },
+  })
+  return res
 }

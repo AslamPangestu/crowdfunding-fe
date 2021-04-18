@@ -1,25 +1,32 @@
-import Service from '~/services/auth'
-
-export const Login = async ({ commit }, payload) => {
-  const data = await Service.Login(payload)
+export async function Login({ commit }, payload) {
+  const data = await this.$axios.$post('/v1/login', payload)
   commit('SetUser', data)
 }
 
-export const Register = async ({ commit }, payload) => {
-  const data = await Service.Register(payload)
+export async function Register({ commit }, payload) {
+  const data = await this.$axios.$post('/v1/register', payload)
   commit('SetUser', data)
 }
 
-export const UploadAvatar = async ({ commit, getters }, payload) => {
-  const data = await Service.UploadAvatar(payload, getters.Header)
+export async function UploadAvatar({ commit, rootGetters }, payload) {
+  const data = await this.$axios.$post('/v1/upload-avatar', payload, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      ...rootGetters.Header,
+    },
+  })
   commit('SetUserAvatar', data.file)
 }
 
-export const GetProfile = async ({ commit, getters }, payload) => {
-  const data = await Service.Profile(getters.Header)
+export async function GetProfile({ commit, rootGetters }) {
+  const data = await this.$axios.$get('/v1/profile', {
+    headers: {
+      ...rootGetters.Header,
+    },
+  })
   commit('SetUser', data)
 }
 
-export const Logout = ({ commit }, _payload) => {
+export const Logout = ({ commit }) => {
   commit('Logout')
 }

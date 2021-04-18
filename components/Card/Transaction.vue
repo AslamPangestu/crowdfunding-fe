@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link
+  <div
     :to="`/dashboard/projects/${id}`"
     class="flex flex-row w-full border border-gray-400 bg-white rounded leading-normal"
   >
@@ -8,29 +8,27 @@
     </figure>
     <div class="px-8 py-4">
       <div class="text-gray-900 font-bold text-xl mb-1">
-        {{ title }}
+        [{{ trxCode }}]{{ title }}
       </div>
       <p class="text-sm text-gray-600 flex items-center">
-        {{ amount }} &middot; {{ percentage }}%
-      </p>
-      <p class="text-gray-700 text-base">
-        {{ shortDesc }}
+        {{ amountFormatted }} &middot; {{ dateFormatted }} &middot; {{ status }}
       </p>
     </div>
-  </nuxt-link>
+  </div>
 </template>
 
 <script>
-import { AmountIDR } from '~/utils/formatter'
+import { AmountIDR, DateLong } from '~/utils/formatter'
 export default {
-  name: 'ProjectWideComponent',
+  name: 'TransactionComponent',
   props: {
     id: { type: Number, default: 0 },
     imageUrl: { type: String, default: '' },
     title: { type: String, default: '' },
-    shortDesc: { type: String, default: '' },
-    currentAmount: { type: Number, default: 0 },
-    targetAmount: { type: Number, default: 0 },
+    status: { type: String, default: '' },
+    trxDate: { type: String, default: '' },
+    trxCode: { type: String, default: '' },
+    amount: { type: Number, default: 0 },
   },
   computed: {
     percentage() {
@@ -39,8 +37,11 @@ export default {
     image() {
       return `${this.$store.state.baseURL}/${this.imageUrl}`
     },
-    amount() {
-      return AmountIDR(this.targetAmount)
+    amountFormatted() {
+      return AmountIDR(this.amount)
+    },
+    dateFormatted() {
+      return DateLong(this.trxDate)
     },
   },
 }

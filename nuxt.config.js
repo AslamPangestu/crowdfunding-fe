@@ -27,7 +27,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/axios', { src: '~/plugins/vuex-persist', ssr: false }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -44,9 +44,37 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    // https://axios.nuxtjs.org/
+    '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://auth.nuxtjs.org/
+    // '@nuxtjs/auth',
   ],
+
+  axios: {
+    baseURL: 'http://localhost:8000/api',
+  },
+
+  // auth: {
+  //   strategies: {
+  //     local: {
+  //       endpoints: {
+  //         login: {
+  //           url: '/api/v1/login',
+  //           method: 'post',
+  //           propertyName: 'data.token',
+  //         },
+  //         logout: false,
+  //         user: {
+  //           url: '/api/v1/profile',
+  //           method: 'get',
+  //           propertyName: 'data',
+  //         },
+  //       },
+  //     },
+  //   },
+  // },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

@@ -1,7 +1,17 @@
-import Service from '~/services/transaction'
-// ctx -> {state,rootGetters,rootState,getters,dispatch,commit}
-// payload -> data send from called action
-export const Fund = async ({ rootGetters }, payload) => {
-  const data = await Service.Fund(payload, rootGetters.Header)
+export async function Fund({ rootGetters }, payload) {
+  const data = await this.$axios.$post('/v1/users/transactions', payload, {
+    headers: {
+      ...rootGetters.Header,
+    },
+  })
+  return data
+}
+
+export async function GetTransactions({ rootGetters }) {
+  const data = await this.$axios.$get('/v1/users/transactions', {
+    headers: {
+      ...rootGetters.Header,
+    },
+  })
   return data
 }

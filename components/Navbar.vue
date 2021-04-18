@@ -33,7 +33,7 @@
         </nuxt-link>
       </li>
     </ul>
-    <template v-if="!$store.state.auth.loggedIn">
+    <template v-if="!isLoggedIn">
       <ul class="flex ml-auto items-center mt-2">
         <li>
           <nuxt-link
@@ -61,7 +61,6 @@
           >
             <div class="flex items-center">
               <img
-                v-if="$store.getters['auth/HasImage']"
                 :src="$store.getters['auth/Avatar']"
                 class="h-8 w-8 rounded-full object-cover"
               />
@@ -82,14 +81,14 @@
           <ul
             class="dropdown-menu absolute hidden text-gray-700 pt-1 shadow w-full -mt-2"
           >
-            <nuxt-link to="/dashboard">
+            <nuxt-link to="/dashboard/projects">
               <li
                 class="cursor-pointer bg-white hover:bg-gray-100 hover:text-orange-action border-t py-2 px-4 block whitespace-no-wrap"
               >
                 Dashboard
               </li>
             </nuxt-link>
-            <nuxt-link to="/dashboard">
+            <nuxt-link to="/profile">
               <li
                 class="cursor-pointer bg-white hover:bg-gray-100 border-t hover:text-orange-action py-2 px-4 block whitespace-no-wrap"
               >
@@ -112,9 +111,15 @@
 <script>
 export default {
   name: 'NavbarComponent',
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.auth.loggedIn
+    },
+  },
   methods: {
     async logout() {
       await this.$store.dispatch('auth/Logout')
+      this.$router.replace({ path: '/' })
     },
   },
 }

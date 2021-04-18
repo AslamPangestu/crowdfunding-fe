@@ -7,7 +7,7 @@
       :first-action="{ label: 'Fund Other Project', route: '/projects' }"
       :second-action="{
         label: 'My Dashboard',
-        route: '/profile/dashboard/projects',
+        route: '/dashboard/projects',
       }"
     >
       <template #content>

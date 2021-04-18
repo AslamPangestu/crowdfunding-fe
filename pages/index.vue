@@ -96,10 +96,7 @@
           </nuxt-link>
         </div>
       </div>
-      <div
-        v-if="campaigns && campaigns.length !== 0"
-        class="grid grid-cols-3 gap-4 mt-3"
-      >
+      <div v-if="campaignsEmpty" class="grid grid-cols-3 gap-4 mt-3">
         <div
           v-for="campaign in campaigns"
           :key="campaign.id"
@@ -193,6 +190,9 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.state.auth.loggedIn
+    },
+    campaignsEmpty() {
+      return this.campaigns && this.campaigns.length === 0
     },
   },
 }

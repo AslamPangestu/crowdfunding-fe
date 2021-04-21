@@ -130,3 +130,52 @@
     <section class="call-to-action bg-purple-progress pt-64 pb-10"></section>
   </div>
 </template>
+
+<script>
+import { AmountIDR } from '~/utils/formatter'
+export default {
+  name: 'DashboardDetailProjectPage',
+  layout: 'main',
+  async asyncData({ store, params }) {
+    const campaign = await store.dispatch('campaign/GetCampaign', params.id)
+    return { campaign }
+  },
+  data() {
+    return {
+      defaultImage: '',
+      amount: 0,
+    }
+  },
+  computed: {
+    percentage() {
+      return (this.campaign.current_amount / this.campaign.target_amount) * 100
+    },
+    avatarImage() {
+      return `${this.$store.state.baseURL}/${this.campaign.user.image_url}`
+    },
+    campaignID() {
+      return Number.parseInt(this.$route.params.id)
+    },
+    isLoggedIn() {
+      return this.$store.state.auth.loggedIn
+    },
+    currentAmount() {
+      return AmountIDR(this.campaign.target_amount)
+    },
+  },
+  mounted() {
+    this.changeDefaultImage(
+      `${this.$store.state.baseURL}/${this.campaign.image_url}`
+    )
+  },
+  methods: {
+    changeDefaultImage(url) {
+      this.defaultImage = url
+    },
+    generateImage(path) {
+      return `${this.$store.state.baseURL}/${path}`
+    },
+  },
+}
+</script>
+

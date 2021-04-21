@@ -124,11 +124,10 @@ export default {
         perks: this.perks,
         target_amount: this.amount,
       }
-      const res = await store.dispatch('campaign/PostNewCampaign', payload)
-      this.$router.push({
-        name: 'dashboard-projects-id',
-        params: { id: res.id },
-      })
+      await store.dispatch(
+        'campaign/PostNewCampaign',
+        payload
+      )
     },
   },
 }

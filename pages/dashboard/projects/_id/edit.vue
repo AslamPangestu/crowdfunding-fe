@@ -7,7 +7,7 @@
         <div class="flex justify-between items-center mb-4">
           <div class="w-full mr-6">
             <h2 class="text-4xl text-gray-900 mb-2 font-medium">
-              Create New Project
+              Edit Project
             </h2>
           </div>
         </div>
@@ -103,7 +103,7 @@
 
 <script>
 export default {
-  name: 'CreateDashboardProjectsPages',
+  name: 'EditDashboardProjectsPages',
   layout: 'main',
   middleware: 'auth',
   data() {
@@ -115,6 +115,11 @@ export default {
       amount: '',
     }
   },
+  computed: {
+    campaignID() {
+      return Number.parseInt(this.$route.params.id)
+    },
+  },
   methods: {
     async submit() {
       const payload = {
@@ -124,10 +129,7 @@ export default {
         perks: this.perks,
         target_amount: this.amount,
       }
-      await store.dispatch(
-        'campaign/PostNewCampaign',
-        payload
-      )
+      await this.$store.dispatch('campaign/PostNewCampaign', payload)
     },
   },
 }

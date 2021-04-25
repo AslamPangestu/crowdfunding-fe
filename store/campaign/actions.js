@@ -18,6 +18,11 @@ export async function GetCampaignsUser(
   return res
 }
 
+export async function GetCampaignTransactions(_, { campaignId }) {
+  const res = await this.$axios.$get(`/v1/campaigns/${campaignId}/transactions`)
+  return res
+}
+
 export async function GetCampaign(_, id) {
   const res = await this.$axios.$get(`/v1/campaigns/${id}`)
   return res

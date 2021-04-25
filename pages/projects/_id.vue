@@ -101,7 +101,7 @@
           <div class="flex progress-info mb-6">
             <div class="text-2xl">{{ percentage }}%</div>
             <div class="ml-auto font-semibold text-2xl">
-              {{ currentAmount }}
+              {{ targetAmount }}
             </div>
           </div>
 
@@ -150,7 +150,7 @@ export default {
     isLoggedIn() {
       return this.$store.state.auth.loggedIn
     },
-    currentAmount() {
+    targetAmount() {
       return AmountIDR(this.campaign.target_amount)
     },
   },

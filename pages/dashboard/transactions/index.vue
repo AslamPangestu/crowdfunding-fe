@@ -17,7 +17,6 @@
               class="w-full lg:max-w-full lg:flex mb-4"
             >
               <transaction
-                :id="transaction.id"
                 :image-url="transaction.campaign.image_url"
                 :title="transaction.campaign.title"
                 :trx-date="transaction.created_at"
@@ -31,9 +30,7 @@
             <div
               class="flex flex-row w-full border border-gray-400 bg-white rounded leading-normal justify-center"
             >
-              <h2 class="text-xl text-gray-900 py-16">
-                Anda belum melakukan transaksi
-              </h2>
+              <h2 class="text-xl text-gray-900 py-16">No Transactions</h2>
             </div>
           </template>
         </div>

@@ -9,7 +9,7 @@
             <h2 class="text-4xl text-gray-900 font-medium">Projects</h2>
           </div>
           <button
-            class="bg-orange-action hover:bg-green-action text-white font-semibold py-2 px-4 mt-8 text-md rounded w-40"
+            class="bg-orange-action hover:bg-green-action text-white font-semibold py-2 px-4 mt-8 text-md text-center rounded w-40"
             @click="$router.push({ path: '/dashboard/projects/create' })"
           >
             + New Project

@@ -4,10 +4,7 @@
       <h1 class="text-4xl text-white mb-5">Projects</h1>
     </section>
     <section class="container project-container mx-auto -mt-16">
-      <div
-        v-if="campaigns && campaigns.length !== 0"
-        class="grid grid-cols-3 gap-4 pb-8"
-      >
+      <div v-if="!campaignsEmpty" class="grid grid-cols-3 gap-4 pb-8">
         <div
           v-for="campaign in campaigns"
           :key="campaign.id"
@@ -54,6 +51,9 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.state.auth.loggedIn
+    },
+    campaignsEmpty() {
+      return this.campaigns && this.campaigns.length === 0
     },
   },
 }

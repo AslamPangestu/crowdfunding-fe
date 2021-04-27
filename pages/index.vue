@@ -96,7 +96,7 @@
           </nuxt-link>
         </div>
       </div>
-      <div v-if="campaignsEmpty" class="grid grid-cols-3 gap-4 mt-3">
+      <div v-if="!campaignsEmpty" class="grid grid-cols-3 gap-4 mt-3">
         <div
           v-for="campaign in campaigns"
           :key="campaign.id"

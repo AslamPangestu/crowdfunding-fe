@@ -10,7 +10,7 @@ export default function ({ $axios, redirect }) {
 
   $axios.onResponse(({ config, data }) => {
     const { url, method } = config
-    console.debug(`RES ${method} ${url}`, data)
+    console.debug(`[RES-${method}] ${url}`, data)
     return data
   })
   $axios.onError((error) => {

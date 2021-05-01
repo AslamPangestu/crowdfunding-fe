@@ -39,7 +39,7 @@ export default {
       return this.title
     },
     image() {
-      return `${this.$store.state.baseURL}/${this.imageUrl}`
+      return this.imageUrl
     },
     amountFormatted() {
       return AmountIDR(this.amount)

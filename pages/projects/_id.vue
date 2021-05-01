@@ -142,7 +142,7 @@ export default {
       return (this.campaign.current_amount / this.campaign.target_amount) * 100
     },
     avatarImage() {
-      return `${this.$store.state.baseURL}/${this.campaign.user.image_url}`
+      return this.campaign.user.image_url
     },
     campaignID() {
       return Number.parseInt(this.$route.params.id)
@@ -155,16 +155,14 @@ export default {
     },
   },
   mounted() {
-    this.changeDefaultImage(
-      `${this.$store.state.baseURL}/${this.campaign.image_url}`
-    )
+    this.changeDefaultImage(this.campaign.image_url)
   },
   methods: {
     changeDefaultImage(url) {
       this.defaultImage = url
     },
     generateImage(path) {
-      return `${this.$store.state.baseURL}/${path}`
+      return path
     },
     async fund() {
       const payload = {

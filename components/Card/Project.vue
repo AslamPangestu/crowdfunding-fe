@@ -56,7 +56,7 @@ export default {
       return (this.currentAmount / this.targetAmount) * 100
     },
     image() {
-      return `${this.$store.state.baseURL}/${this.imageUrl}`
+      return this.imageUrl
     },
     amount() {
       return AmountIDR(this.targetAmount)

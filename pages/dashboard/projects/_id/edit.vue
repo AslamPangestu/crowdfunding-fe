@@ -7,7 +7,7 @@
         <div class="flex justify-between items-center mb-4">
           <div class="w-full mr-6">
             <h2 class="text-4xl text-gray-900 mb-2 font-medium">
-              Edit Project
+              Edit Project {{ pageName }}
             </h2>
           </div>
         </div>
@@ -89,7 +89,7 @@
                     class="bg-orange-action hover:bg-green-action text-white font-semibold py-2 px-4 text-md rounded w-32"
                     type="submit"
                   >
-                    Save
+                    Update
                   </button>
                 </div>
               </form>
@@ -106,13 +106,15 @@ export default {
   name: 'EditDashboardProjectsPages',
   layout: 'main',
   middleware: 'auth',
-  data() {
+  async asyncData({ store, params }) {
+    const campaign = await store.dispatch('campaign/GetCampaign', params.id)
     return {
-      title: '',
-      shortDescription: '',
-      description: '',
-      perks: '',
-      amount: '',
+      pageName: campaign.title,
+      title: campaign.title,
+      shortDescription: campaign.short_description,
+      description: campaign.description,
+      perks: campaign.perks.join(', '),
+      amount: campaign.target_amount,
     }
   },
   computed: {
@@ -127,9 +129,13 @@ export default {
         short_description: this.shortDescription,
         description: this.description,
         perks: this.perks,
-        target_amount: this.amount,
+        target_amount: parseInt(this.amount, 10),
       }
-      await this.$store.dispatch('campaign/PostNewCampaign', payload)
+      await this.$store.dispatch('campaign/PatchCampaign', {
+        payload,
+        id: this.campaignID,
+      })
+      this.$router.back()
     },
   },
 }

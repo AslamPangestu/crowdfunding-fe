@@ -42,12 +42,13 @@
                 <p class="text-sm font-bold flex items-center mb-1 mt-4">
                   What Will Funders Get
                 </p>
-                <ul v-if="campaign.perks.length !== 0" class="list-disc ml-5">
+                <!-- <ul v-if="havePerks" class="list-disc ml-5">
                   <li v-for="(perk, id) in campaign.perks" :key="id">
                     {{ perk }}
                   </li>
-                </ul>
-                <p v-else>No Perks</p>
+                </ul> -->
+                <!-- <p v-else>No Perks</p> -->
+                <p>No Perks</p>
                 <p class="text-sm font-bold flex items-center mb-1 mt-4">
                   Price
                 </p>
@@ -59,47 +60,40 @@
           </div>
         </div>
         <div class="flex justify-between items-center">
-          <div class="w-3/4 mr-6">
+          <div class="w-2/4 mr-6">
             <h3 class="text-2xl text-gray-900 mb-4 mt-5">Gallery</h3>
           </div>
-          <div class="w-1/4 text-right">
-            <a
-              href="#"
-              class="bg-green-action hover:bg-green-action text-white font-bold px-4 py-1 rounded inline-flex items-center"
+          <div class="w-2/4 text-right">
+            <input
+              ref="file"
+              type="file"
+              class="border p-1 rounded overflow-hidden"
+              @change="selectFile"
+            />
+            <button
+              class="bg-green-action hover:bg-orange-action text-white font-semibold py-2 px-4 text-md text-center rounded w-32"
+              @click="upload"
             >
               Upload
-            </a>
+            </button>
           </div>
         </div>
-        <div class="flex -mx-2">
+        <div v-if="haveGalleries" class="grid grid-cols-4 gap-4 -mx-2">
           <div
-            class="relative w-1/4 bg-white m-2 p-2 border border-gray-400 rounded"
+            v-for="(image, idx) in campaign.images"
+            :key="idx"
+            class="relative w-full bg-white m-2 p-2 border border-gray-400 rounded"
           >
             <figure class="item-thumbnail">
-              <img src="/project-slider-1.jpg" alt="" class="rounded w-full" />
+              <img :src="image.image_url" alt="" class="rounded w-full" />
             </figure>
           </div>
-          <div
-            class="relative w-1/4 bg-white m-2 p-2 border border-gray-400 rounded"
-          >
-            <figure class="item-thumbnail">
-              <img src="/project-slider-2.jpg" alt="" class="rounded w-full" />
-            </figure>
-          </div>
-          <div
-            class="relative w-1/4 bg-white m-2 p-2 border border-gray-400 rounded"
-          >
-            <figure class="item-thumbnail">
-              <img src="/project-slider-3.jpg" alt="" class="rounded w-full" />
-            </figure>
-          </div>
-          <div
-            class="relative w-1/4 bg-white m-2 p-2 border border-gray-400 rounded"
-          >
-            <figure class="item-thumbnail">
-              <img src="/project-slider-4.jpg" alt="" class="rounded w-full" />
-            </figure>
-          </div>
+        </div>
+        <div
+          v-else
+          class="flex flex-row w-full border border-gray-400 bg-white rounded leading-normal justify-center"
+        >
+          <h2 class="text-xl text-gray-900 py-16">No Images</h2>
         </div>
         <div class="flex justify-between items-center">
           <div class="w-3/4 mr-6">
@@ -110,7 +104,7 @@
           <div>Total Transaction: {{ currentAmount }}</div>
         </div>
         <div class="block mb-2">
-          <template v-if="!transactionsEmpty">
+          <template v-if="haveTransactions">
             <div
               v-for="transaction in transactions"
               :key="transaction.id"
@@ -155,22 +149,15 @@ export default {
   },
   data() {
     return {
-      defaultImage: '',
-      amount: 0,
+      selectedFiles: undefined,
     }
   },
   computed: {
     percentage() {
       return (this.campaign.current_amount / this.campaign.target_amount) * 100
     },
-    avatarImage() {
-      return `${this.$store.state.baseURL}/${this.campaign.user.image_url}`
-    },
     campaignID() {
       return Number.parseInt(this.$route.params.id)
-    },
-    isLoggedIn() {
-      return this.$store.state.auth.loggedIn
     },
     currentAmount() {
       return AmountIDR(this.campaign.current_amount)
@@ -178,18 +165,35 @@ export default {
     targetAmount() {
       return AmountIDR(this.campaign.target_amount)
     },
-  },
-  mounted() {
-    this.changeDefaultImage(
-      `${this.$store.state.baseURL}/${this.campaign.image_url}`
-    )
+    havePerks() {
+      return this.campaign.perks.length !== 0
+    },
+    haveTransactions() {
+      return this.transactions.length !== 0
+    },
+    haveGalleries() {
+      return this.campaign.images.length !== 0
+    },
   },
   methods: {
-    changeDefaultImage(url) {
-      this.defaultImage = url
+    selectFile() {
+      this.selectedFiles = this.$refs.file.files
     },
-    generateImage(path) {
-      return `${this.$store.state.baseURL}/${path}`
+    async getCampaign() {
+      const campaign = await this.$store.dispatch(
+        'campaign/GetCampaign',
+        this.campaignID
+      )
+      this.campaign = campaign
+    },
+    async upload() {
+      const form = new FormData()
+      form.append('campaign_id', this.campaignID)
+      form.append('file', this.selectedFiles.item(0))
+      form.append('is_primary', true)
+      await this.$store.dispatch('campaign/UploadCampaignImages', form)
+      this.getCampaign()
+      this.selectedFiles = undefined
     },
   },
 }

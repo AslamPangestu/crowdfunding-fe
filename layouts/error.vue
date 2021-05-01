@@ -3,7 +3,7 @@
     <status-action
       title="Opps! Something wrong"
       image="/404-illustration.svg"
-      :first-action="{ label: 'Back To Homepage', route: '/' }"
+      :first-action="{ label: 'Go Back To Homepage', route: '/' }"
     >
       <template #content>
         <template v-if="error.statusCode === 404">

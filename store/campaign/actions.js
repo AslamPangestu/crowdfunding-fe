@@ -18,8 +18,15 @@ export async function GetCampaignsUser(
   return res
 }
 
-export async function GetCampaignTransactions(_, { campaignId }) {
-  const res = await this.$axios.$get(`/v1/campaigns/${campaignId}/transactions`)
+export async function GetCampaignTransactions({ rootGetters }, { campaignId }) {
+  const res = await this.$axios.$get(
+    `/v1/campaigns/${campaignId}/transactions`,
+    {
+      headers: {
+        ...rootGetters.Header,
+      },
+    }
+  )
   return res
 }
 
@@ -29,9 +36,28 @@ export async function GetCampaign(_, id) {
 }
 
 export async function PostNewCampaign({ rootGetters }, payload) {
-  const res = await this.$axios.$post('/v1/campaigns/', payload, {
+  const res = await this.$axios.$post('/v1/campaigns', payload, {
     headers: {
       ...rootGetters.Header,
+    },
+  })
+  return res
+}
+
+export async function PatchCampaign({ rootGetters }, { payload, id }) {
+  const res = await this.$axios.$patch(`/v1/campaigns/${id}`, payload, {
+    headers: {
+      ...rootGetters.Header,
+    },
+  })
+  return res
+}
+
+export async function UploadCampaignImages({ rootGetters }, payload) {
+  const res = await this.$axios.$post('/v1/campaign-images', payload, {
+    headers: {
+      ...rootGetters.Header,
+      'Content-Type': 'multipart/form-data',
     },
   })
   return res

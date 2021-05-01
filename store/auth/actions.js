@@ -11,8 +11,8 @@ export async function Register({ commit }, payload) {
 export async function UploadAvatar({ commit, rootGetters }, payload) {
   const data = await this.$axios.$post('/v1/upload-avatar', payload, {
     headers: {
-      'Content-Type': 'multipart/form-data',
       ...rootGetters.Header,
+      'Content-Type': 'multipart/form-data',
     },
   })
   commit('SetUserAvatar', data.file)

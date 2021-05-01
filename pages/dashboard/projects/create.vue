@@ -122,7 +122,7 @@ export default {
         short_description: this.shortDescription,
         description: this.description,
         perks: this.perks,
-        target_amount: this.amount,
+        target_amount: parseInt(this.amount, 10),
       }
       const res = await this.$store.dispatch(
         'campaign/PostNewCampaign',

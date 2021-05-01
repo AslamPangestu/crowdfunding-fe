@@ -4,7 +4,7 @@
     class="flex flex-row w-full border border-gray-400 bg-white rounded leading-normal"
   >
     <figure>
-      <img :src="image" alt="" class="rounded w-40 h-40 object-cover" />
+      <img :src="imageUrl" alt="" class="rounded w-40 h-40 object-cover" />
     </figure>
     <div class="px-8 py-4">
       <div class="text-gray-900 font-bold text-xl mb-1">
@@ -35,9 +35,6 @@ export default {
   computed: {
     percentage() {
       return (this.currentAmount / this.targetAmount) * 100
-    },
-    image() {
-      return `${this.$store.state.baseURL}/${this.imageUrl}`
     },
     amount() {
       return AmountIDR(this.targetAmount)

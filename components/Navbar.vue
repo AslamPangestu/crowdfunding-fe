@@ -88,7 +88,7 @@
                 Dashboard
               </li>
             </nuxt-link>
-            <nuxt-link to="/profile">
+            <nuxt-link to="/dashboard/account-settings">
               <li
                 class="cursor-pointer bg-white hover:bg-gray-100 border-t hover:text-orange-action py-2 px-4 block whitespace-no-wrap"
               >

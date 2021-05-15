@@ -1,6 +1,10 @@
 // payload -> data send from called action
 export const SetUser = (state, payload) => {
-  state.user = payload
+  if (!payload.token) delete payload.token
+  state.user = {
+    ...state.user,
+    ...payload,
+  }
   state.loggedIn = !!payload
 }
 

@@ -25,6 +25,16 @@ export async function GetProfile({ commit, rootGetters }) {
     },
   })
   commit('SetUser', data)
+  return data
+}
+
+export async function UpdateProfile({ commit, rootGetters }, payload) {
+  const data = await this.$axios.$patch('/v1/profile', payload, {
+    headers: {
+      ...rootGetters.Header,
+    },
+  })
+  commit('SetUserAvatar', data.file)
 }
 
 export const Logout = ({ commit }) => {

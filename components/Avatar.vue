@@ -5,12 +5,12 @@
         <img
           :src="url"
           alt=""
-          class="h-28 w-28 rounded-full border-white border-4 object-cover"
+          class="h-40 w-40 rounded-full border-white border-4 object-cover"
         />
         <img
           src="/icon-avatar-add.svg"
           alt=""
-          class="absolute right-0 bottom-0 pb-2"
+          class="h-10 w-10 absolute right-0 bottom-0 pb-2"
         />
         <input
           id="file"
@@ -29,9 +29,17 @@
 <script>
 export default {
   name: 'AvatarComponent',
+  props: {
+    defaultImage: { type: String, default: '' },
+  },
   data() {
     return {
       url: '/avatar.jpg',
+    }
+  },
+  mounted() {
+    if (this.defaultImage !== '') {
+      this.url = this.defaultImage
     }
   },
   methods: {

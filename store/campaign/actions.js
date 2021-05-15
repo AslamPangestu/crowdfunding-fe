@@ -13,6 +13,9 @@ export async function GetCampaignsUser(
   { page, pageSize } = { page: 1, pageSize: 0 }
 ) {
   const res = await this.$axios.$get('/v1/campaigns', {
+    headers: {
+      ...rootGetters.Header,
+    },
     params: { user_id: rootGetters['auth/UserID'], page, page_size: pageSize },
   })
   return res

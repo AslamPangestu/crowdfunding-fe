@@ -1,15 +1,16 @@
 export async function GetCampaigns(
-  _,
+  { commit },
   { page, pageSize } = { page: 1, pageSize: 0 }
 ) {
   const res = await this.$axios.$get('/v1/campaigns', {
     params: { page, page_size: pageSize },
   })
-  return res
+  commit('ui/SetPagination', res.pagination, { root: true })
+  return res.data
 }
 
 export async function GetCampaignsUser(
-  { rootGetters },
+  { rootGetters, commit },
   { page, pageSize } = { page: 1, pageSize: 0 }
 ) {
   const res = await this.$axios.$get('/v1/campaigns', {
@@ -18,10 +19,14 @@ export async function GetCampaignsUser(
     },
     params: { user_id: rootGetters['auth/UserID'], page, page_size: pageSize },
   })
-  return res
+  commit('ui/SetPagination', res.pagination, { root: true })
+  return res.data
 }
 
-export async function GetCampaignTransactions({ rootGetters }, { campaignId }) {
+export async function GetCampaignTransactions(
+  { rootGetters, commit },
+  { campaignId }
+) {
   const res = await this.$axios.$get(
     `/v1/campaigns/${campaignId}/transactions`,
     {
@@ -30,12 +35,14 @@ export async function GetCampaignTransactions({ rootGetters }, { campaignId }) {
       },
     }
   )
-  return res
+  commit('ui/SetPagination', res.pagination, { root: true })
+  return res.data
 }
 
-export async function GetCampaign(_, id) {
+export async function GetCampaign({ commit }, id) {
   const res = await this.$axios.$get(`/v1/campaigns/${id}`)
-  return res
+  commit('ui/SetPagination', res.pagination, { root: true })
+  return res.data
 }
 
 export async function PostNewCampaign({ rootGetters }, payload) {

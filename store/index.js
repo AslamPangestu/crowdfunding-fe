@@ -4,6 +4,7 @@ import VuexPersistence from 'vuex-persist'
 import auth from './auth'
 import campaign from './campaign'
 import transaction from './transaction'
+import ui from './ui'
 
 // Persist State Config
 const vuexLocal = new VuexPersistence({
@@ -29,6 +30,7 @@ export default function (/* { ssrContext } */) {
       auth,
       campaign,
       transaction,
+      ui,
     },
     // Plugins
     plugins: [vuexLocal.plugin],

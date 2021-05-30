@@ -39,10 +39,9 @@ export async function GetCampaignTransactions(
   return res.data
 }
 
-export async function GetCampaign({ commit }, id) {
+export async function GetCampaign(_, id) {
   const res = await this.$axios.$get(`/v1/campaigns/${id}`)
-  commit('ui/SetPagination', res.pagination, { root: true })
-  return res.data
+  return res
 }
 
 export async function PostNewCampaign({ rootGetters }, payload) {

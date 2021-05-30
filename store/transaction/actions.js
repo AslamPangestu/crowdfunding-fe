@@ -1,17 +1,18 @@
 export async function Fund({ rootGetters }, payload) {
-  const data = await this.$axios.$post('/v1/users/transactions', payload, {
+  const res = await this.$axios.$post('/v1/users/transactions', payload, {
     headers: {
       ...rootGetters.Header,
     },
   })
-  return data
+  return res
 }
 
-export async function GetTransactions({ rootGetters }) {
-  const data = await this.$axios.$get('/v1/users/transactions', {
+export async function GetTransactions({ rootGetters, commit }) {
+  const res = await this.$axios.$get('/v1/users/transactions', {
     headers: {
       ...rootGetters.Header,
     },
   })
-  return data
+  commit('ui/SetPagination', res.pagination, { root: true })
+  return res.data
 }

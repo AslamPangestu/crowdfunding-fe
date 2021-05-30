@@ -116,6 +116,7 @@
                 :amount="transaction.amount"
               />
             </div>
+            <pagination />
           </template>
           <template v-else>
             <div
@@ -136,6 +137,7 @@ export default {
   name: 'DashboardDetailProjectPage',
   components: {
     Transaction: () => import('~/components/Card/Transaction'),
+    Pagination: () => import('~/components/Pagination'),
   },
   layout: 'main',
   middleware: 'auth',

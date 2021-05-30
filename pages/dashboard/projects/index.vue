@@ -31,6 +31,7 @@
                 :target-amount="campaign.target_amount"
               />
             </div>
+            <pagination />
           </template>
           <template v-else>
             <div
@@ -53,6 +54,7 @@ export default {
   name: 'DashboardProjectsPages',
   components: {
     ProjectWide: () => import('~/components/Card/ProjectWide'),
+    Pagination: () => import('~/components/Pagination'),
   },
   layout: 'main',
   middleware: 'auth',

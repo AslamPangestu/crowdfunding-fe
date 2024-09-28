@@ -29,7 +29,6 @@
               type="password"
               class="auth-form focus:outline-none focus:bg-purple-hover focus:shadow-outline focus:border-purple-hover-stroke focus:text-gray-100"
               placeholder="Write your password here"
-              value="nasigorenglimaribbu"
             />
           </div>
           <div class="mb-4">

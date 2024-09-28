@@ -6,7 +6,7 @@
       :first-action="{ label: 'Fund Other Project', route: '/projects' }"
     >
       <template #content>
-        An error occured when processing your transaction. <br />
+        An error occurred when processing your transaction. <br />
         Please try again later
       </template>
     </status-action>
